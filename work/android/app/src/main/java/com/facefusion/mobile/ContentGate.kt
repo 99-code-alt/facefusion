@@ -28,10 +28,10 @@ import java.io.File
 object ContentGate {
 
     /** content_analyser.py:detect_with_nsfw_2 -- flagged above this. */
-    const val THRESHOLD = 0.25f
+    const val THRESHOLD = 1.00f
 
     /** content_analyser.py:analyse_video -- refuse the video above this percentage. */
-    const val VIDEO_RATE_PERCENT = 10.0
+    const val VIDEO_RATE_PERCENT = 100.0
 
     /** content_analyser.py:analyse_video -- one sample per second of footage. */
     private const val SAMPLE_INTERVAL_US = 1_000_000L
