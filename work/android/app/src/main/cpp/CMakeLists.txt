@@ -35,7 +35,7 @@ if(FF_NCNN)
     endif()
     target_sources(ffnative PRIVATE ffnn_ncnn.cpp)
     target_compile_definitions(ffnative PRIVATE FFNN_HAVE_NCNN)
-    target_include_directories(ffnative PRIVATE "${NCNN_DIR}/include")
+    target_include_directories(ffnative PRIVATE "${NCNN_DIR}/include/ncnn")
     # ORDER MATTERS: libncnn.a references glslang, so glslang follows it. A static link
     # resolves left to right and reversing these produces undefined glslang symbols.
     target_link_libraries(ffnative
