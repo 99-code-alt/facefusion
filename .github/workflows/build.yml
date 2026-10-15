@@ -22,6 +22,21 @@ jobs:
           mkdir -p work/android/app/src/main/cpp/include
           cp -R qnn-headers-temp/QNN work/android/app/src/main/cpp/include/
 
+      - name: Download and stage NCNN Android Vulkan
+        run: |
+          ARCHIVE="$RUNNER_TEMP/ncnn-android-vulkan.zip"
+          DEST="$RUNNER_TEMP/ncnn-package"
+          curl -fL --retry 3 -o "$ARCHIVE" https://github.com/Tencent/ncnn/releases/download/20260526/ncnn-20260526-android-vulkan.zip
+          unzip -q "$ARCHIVE" -d "$DEST"
+          SRC="$DEST/ncnn-20260526-android-vulkan/arm64-v8a"
+          mkdir -p work/android/ncnn/lib work/android/ncnn/include
+          cp "$SRC"/lib/*.a work/android/ncnn/lib/
+          cp -R "$SRC"/include/. work/android/ncnn/include/
+          for f in libncnn.a libglslang.a libMachineIndependent.a libGenericCodeGen.a libOSDependent.a libSPIRV.a; do
+            test -s "work/android/ncnn/lib/$f" || { echo "Falta $f"; exit 1; }
+          done
+          test -f work/android/ncnn/include/ncnn/net.h
+          echo "NCNN Android arm64-v8a preparado correctamente"
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
